@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../../services/account.service';
 
 @Component({
@@ -10,18 +11,16 @@ import { AccountService } from '../../services/account.service';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
-  loading = false;
-  submitted = false;
   returnUrl!: string;
-  error = '';
 
   get formControls() { return this.loginForm.controls; }
 
   constructor(
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private accountService: AccountService
+    private readonly formBuilder: FormBuilder,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly accountService: AccountService,
+    private readonly toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -35,11 +34,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
-
     if (this.loginForm.invalid) return;
 
-    this.loading = true;
     this.accountService
       .login(
         this.formControls.username.value,
@@ -47,11 +43,11 @@ export class LoginComponent implements OnInit {
       )
       .subscribe(
         () => {
+          this.toastr.success('Zalogowano pomyślnie!');
           this.router.navigate([this.returnUrl]);
         },
         (error) => {
-          this.error = error;
-          this.loading = false;
+          this.toastr.error('Nieprawidłowy login lub hasło');
         }
       );
   }
