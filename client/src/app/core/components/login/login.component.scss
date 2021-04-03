@@ -1,0 +1,17 @@
+.login-container{
+    height: 80vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+  
+    mat-card {
+      text-align: center;
+      width: 30em;
+    }
+    
+    mat-form-field {
+      display: block;
+    }
+  
+}
+
