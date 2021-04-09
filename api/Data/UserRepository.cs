@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using api.Entities;
-using api.Intefaces;
+using api.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Data
