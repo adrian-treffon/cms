@@ -1,8 +1,11 @@
 using System.Text;
+using api.CommandsAndQueries.Producer;
 using api.Data;
 using api.Helpers;
-using api.Intefaces;
+using api.Interfaces;
 using api.Services;
+using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,9 +34,9 @@ namespace cms
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(opt =>
-              {
-                opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
-              });
+            {
+              opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+            });
             services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
               {
                   builder
@@ -42,7 +45,9 @@ namespace cms
                       .WithOrigins("http://localhost:4200")
                       .AllowCredentials();
               }));
-              services.AddControllers();
+              services.AddControllers().AddFluentValidation(cfg => {
+                cfg.RegisterValidatorsFromAssemblyContaining<Create>();
+              });
               services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt => {
                   opt.TokenValidationParameters = new TokenValidationParameters
                   {
@@ -52,10 +57,7 @@ namespace cms
                       ValidateAudience = false
                   };
               });
-              services.AddSwaggerGen(c =>
-              {
-                  c.SwaggerDoc("v1", new OpenApiInfo { Title = "cms", Version = "v1" });
-              });
+              services.AddMediatR(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,8 +66,6 @@ namespace cms
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "cms v1"));
             }
 
             app.UseCors("CorsPolicy");
