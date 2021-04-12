@@ -1,0 +1,21 @@
+.store-list-container{
+  height: 100vh;
+
+  .utils-container{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  table {
+    width: 100%;
+  }
+
+  .table-container{
+    padding: 0 30px;
+    padding-bottom: 100px;
+  }
+
+  .search {
+    padding: 0 30px;
+  }
+}
