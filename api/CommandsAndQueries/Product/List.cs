@@ -19,17 +19,21 @@ namespace api.CommandsAndQueries.Product
 
       public class Query : IRequest<ProductsEnvelope>
       {
-        public Query(int? limit, int? offset, string orderBy, bool isDescending)
+        public Query(int? limit, int? offset, string orderBy, bool isDescending, string filterBy, string searchedPhrase)
         {
           Limit = limit;
           Offset = offset;
           OrderBy = orderBy;
           IsDescending = isDescending;
+          FilterBy = filterBy;
+          SearchedPhrase = searchedPhrase;
         }
         public int? Limit { get; set; }
         public int? Offset { get; set; }
         public string OrderBy { get; set; }
         public bool IsDescending { get; set; }
+        public string FilterBy { get; set; }
+        public string SearchedPhrase { get; set; }
       }
 
       public class Handler : IRequestHandler<Query, ProductsEnvelope>
@@ -55,9 +59,15 @@ namespace api.CommandsAndQueries.Product
                 queryable = queryable.OrderBy($"{property} DESC");
               else
                queryable = queryable.OrderBy($"{property} ASC");
+            }else 
+            {
+                queryable = queryable.OrderByDescending(x => x.CreatedAt);
             }
 
-            queryable = queryable.Where("Name.Contains(@0)","te");
+            if(!string.IsNullOrEmpty(request.FilterBy) && !string.IsNullOrEmpty(request.SearchedPhrase))
+            {
+              queryable = queryable.Where($"{request.FilterBy}.Contains(@0)",request.SearchedPhrase);
+            }
 
             var products = await queryable
                 .Skip(request.Offset ?? 0)

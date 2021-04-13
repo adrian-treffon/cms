@@ -13,8 +13,14 @@ namespace api.Controllers
       => await Mediator.Send(commnad);
 
       [HttpGet]
-      public async Task<ActionResult<ProductsEnvelope>> List([FromQuery]int? limit, [FromQuery]int? offset, [FromQuery]bool isDescending,[FromQuery]string orderBy)
-        => await Mediator.Send(new List.Query(limit, offset, orderBy, isDescending));
+      public async Task<ActionResult<ProductsEnvelope>> List(
+      [FromQuery]int? limit, 
+      [FromQuery]int? offset, 
+      [FromQuery]bool isDescending,
+      [FromQuery]string orderBy,
+      [FromQuery]string filterBy, 
+      [FromQuery]string searchedPhrase)
+        => await Mediator.Send(new List.Query(limit, offset, orderBy, isDescending, filterBy, searchedPhrase));
 
       [HttpDelete]
       public async Task<ActionResult<Unit>> Remove(Remove.Command command)

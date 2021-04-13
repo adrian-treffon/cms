@@ -1,13 +1,13 @@
 <div class="store-list-container">
   <div class="utils-container">
     <div>
-    <mat-form-field class="search">
+    <mat-form-field class="search" appearance="outline">
       <mat-label>Szukaj</mat-label>
       <input matInput (keyup)="applyFilter($event)" #input>
     </mat-form-field>
-    <mat-form-field class="filter-by">
+    <mat-form-field class="filter-by" appearance="outline">
       <mat-select (selectionChange)="onFilterByChange($event)">
-        <mat-option *ngFor="let filter of filterBy" [value]="filter.value">
+        <mat-option *ngFor="let filter of filterByOptions" [value]="filter.value">
           {{filter.viewValue}}
         </mat-option>
       </mat-select>

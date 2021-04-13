@@ -11,12 +11,19 @@ export class StoreService {
   baseUrl = environment.apiUrl;
   constructor(private readonly http: HttpClient) { }
 
-  getAll(limit?: number, offset?: number, orderBy?: string, isDescending?: boolean): Observable<ProductEnvelope> {
+  getAll(limit?: number,
+    offset?: number,
+    orderBy?: string,
+    isDescending?: boolean,
+    filterBy?: string,
+    searchedPhrase?: string): Observable<ProductEnvelope> {
     let params = new HttpParams();
     if (limit) { params = params.append('limit', limit.toString()); }
     if (offset) { params = params.append('offset', offset.toString()); }
     if (orderBy) { params = params.append('orderBy', orderBy); }
     if (isDescending) { params = params.append('isDescending', isDescending.toString()); }
+    if (filterBy) { params = params.append('filterBy', filterBy); }
+    if (searchedPhrase) { params = params.append('searchedPhrase', searchedPhrase); }
 
     return this.http.get<ProductEnvelope>(this.baseUrl + 'product', { params });
   }
