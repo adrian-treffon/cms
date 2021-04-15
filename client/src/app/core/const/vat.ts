@@ -1,0 +1,1 @@
+export const vats: any[] = [{value: 8, viewValue: '8%'}, {value: 16, viewValue: '16%'}];

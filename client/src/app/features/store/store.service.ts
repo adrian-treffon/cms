@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Product } from 'src/app/core/models/product';
 import { ProductEnvelope } from 'src/app/core/models/productEnvelope';
 import { environment } from 'src/environments/environment';
 
@@ -26,5 +27,9 @@ export class StoreService {
     if (searchedPhrase) { params = params.append('searchedPhrase', searchedPhrase); }
 
     return this.http.get<ProductEnvelope>(this.baseUrl + 'product', { params });
+  }
+
+  create(product: Product): Observable<any> {
+   return this.http.post(this.baseUrl + 'product', product);
   }
 }

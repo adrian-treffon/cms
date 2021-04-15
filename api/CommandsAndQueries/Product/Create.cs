@@ -26,6 +26,7 @@ namespace api.CommandsAndQueries.Product
         public int CategoryId { get; set; }
         public int ProducerId { get; set; }
         public int TypeId { get; set; }
+        public bool IsActive { get; set; }
       }
 
       public class CommandValidator : AbstractValidator<Command>
@@ -38,7 +39,6 @@ namespace api.CommandsAndQueries.Product
           RuleFor(x => x.Description).NotEmpty();
           RuleFor(x => x.GrossPrice).NotEmpty();
           RuleFor(x => x.VAT).NotEmpty();
-          RuleFor(x => x.PromotionalPrice).NotEmpty();
           RuleFor(x => x.Availability).NotEmpty();
           RuleFor(x => x.AvailabilityUnit).NotEmpty();
           RuleFor(x => x.LeadTime).NotEmpty();
@@ -79,7 +79,7 @@ namespace api.CommandsAndQueries.Product
               Description = request.Description,
               EAN = request.EAN,
               GrossPrice = request.GrossPrice,
-              IsActive = true,
+              IsActive = request.IsActive,
               LeadTime = request.LeadTime,
               ModifiedAt = DateTime.Now,
               Name= request.Name,
