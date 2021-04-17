@@ -26,5 +26,6 @@ namespace api.Entities
       public int ProducerId { get; set; }
       public ProductType Type { get; set; }
       public int TypeId { get; set; }
+      public string Parameters { get; set; }
     }
 }

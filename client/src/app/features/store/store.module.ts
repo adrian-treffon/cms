@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { StoreListComponent } from './store-list/store-list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { StoreAddComponent } from './store-add/store-add.component';
+import { DynamicFormInputComponent } from 'src/app/core/components/dynamic-form-input/dynamic-form-input.component';
 
 
 const routes: Routes = [

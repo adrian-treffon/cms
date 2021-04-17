@@ -1,8 +1,11 @@
+import { SelectionModel } from '@angular/cdk/collections';
+import { Route } from '@angular/compiler/src/core';
 import {  Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSelectChange } from '@angular/material/select';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { EMPTY, Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Product } from 'src/app/core/models/product';
@@ -14,7 +17,9 @@ import { StoreService } from '../store.service';
   styleUrls: ['./store-list.component.scss'],
 })
 export class StoreListComponent implements OnInit, OnDestroy{
+  get isSelected(): boolean {return this.selection.isEmpty()}
   displayedColumns: string[] = [
+    'select',
     'sku',
     'name',
     'ean',
@@ -30,7 +35,7 @@ export class StoreListComponent implements OnInit, OnDestroy{
     'producer',
     'type'
   ];
-
+  selection = new SelectionModel<Product>(false, []);
   filterByOptions: any[] = [
     {value: '', viewValue: ''},
     {value: 'SKU', viewValue: 'SKU'},
@@ -40,7 +45,6 @@ export class StoreListComponent implements OnInit, OnDestroy{
     {value: 'Producer.Name', viewValue: 'Producent'},
     {value: 'Type.Name', viewValue: 'Typ'}
   ];
-
   dataSource!: MatTableDataSource<Product>;
   totalItems!: number;
   pageSize: number = 10;
@@ -55,7 +59,8 @@ export class StoreListComponent implements OnInit, OnDestroy{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private readonly storeService: StoreService) {
+  constructor(private readonly storeService: StoreService,
+              private readonly router: Router) {
     this.searchSubscription = this.term$.pipe(
       debounceTime(2000),
       distinctUntilChanged(),
@@ -112,4 +117,9 @@ export class StoreListComponent implements OnInit, OnDestroy{
     this.getProducts(this.pageSize, this.page * this.pageSize, this.orderBy, this.isDescending, this.filterBy, this.searchedPhrase);
   }
 
+  onAddEditBtnClick(): void {
+    if(this.selection.isEmpty()){
+      this.router.navigateByUrl('store/add');
+    }
+  }
 }

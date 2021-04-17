@@ -27,6 +27,7 @@ namespace api.CommandsAndQueries.Product
         public int ProducerId { get; set; }
         public int TypeId { get; set; }
         public bool IsActive { get; set; }
+        public string Parameters { get; set; }
       }
 
       public class CommandValidator : AbstractValidator<Command>
@@ -38,7 +39,6 @@ namespace api.CommandsAndQueries.Product
           RuleFor(x => x.EAN).NotEmpty();
           RuleFor(x => x.Description).NotEmpty();
           RuleFor(x => x.GrossPrice).NotEmpty();
-          RuleFor(x => x.VAT).NotEmpty();
           RuleFor(x => x.Availability).NotEmpty();
           RuleFor(x => x.AvailabilityUnit).NotEmpty();
           RuleFor(x => x.LeadTime).NotEmpty();
@@ -47,6 +47,7 @@ namespace api.CommandsAndQueries.Product
           RuleFor(x => x.CategoryId).NotEmpty();
           RuleFor(x => x.ProducerId).NotEmpty();
           RuleFor(x => x.TypeId).NotEmpty();
+          RuleFor(x => x.Parameters).NotEmpty();
         }
       }
       public class Handler : IRequestHandler<Command>
@@ -87,6 +88,7 @@ namespace api.CommandsAndQueries.Product
               SKU = request.SKU,
               VAT = request.VAT,
               TypeId = request.TypeId,
+              Parameters = request.Parameters,
               PromotionalPrice = request.PromotionalPrice,
               ProducerId = request.ProducerId
            };

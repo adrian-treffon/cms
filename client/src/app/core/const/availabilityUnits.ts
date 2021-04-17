@@ -1,1 +1,1 @@
-export const availabilityUnits: string[] = ['szt.'];
+export const availabilityUnits: string[] = ['szt.', 'kg', 'zestawy'];

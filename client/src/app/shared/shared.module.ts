@@ -47,9 +47,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 import { RouterModule } from '@angular/router';
+import { DynamicFormInputComponent } from '../core/components/dynamic-form-input/dynamic-form-input.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [DynamicFormInputComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -152,7 +153,8 @@ import { RouterModule } from '@angular/router';
     OverlayModule,
     PortalModule,
     ScrollingModule,
-    RouterModule
+    RouterModule,
+    DynamicFormInputComponent
   ]
 })
 
