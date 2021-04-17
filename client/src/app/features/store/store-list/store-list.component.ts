@@ -17,9 +17,7 @@ import { StoreService } from '../store.service';
   styleUrls: ['./store-list.component.scss'],
 })
 export class StoreListComponent implements OnInit, OnDestroy{
-  get isSelected(): boolean {return this.selection.isEmpty()}
   displayedColumns: string[] = [
-    'select',
     'sku',
     'name',
     'ean',
@@ -33,9 +31,9 @@ export class StoreListComponent implements OnInit, OnDestroy{
     'isActive',
     'category',
     'producer',
-    'type'
+    'type',
+    'actions'
   ];
-  selection = new SelectionModel<Product>(false, []);
   filterByOptions: any[] = [
     {value: '', viewValue: ''},
     {value: 'SKU', viewValue: 'SKU'},
@@ -86,6 +84,7 @@ export class StoreListComponent implements OnInit, OnDestroy{
     }
   }
 
+  // tslint:disable-next-line: max-line-length
   private getProducts(limit?: number, offset?: number, orderBy?: string, isDescending?: boolean, filterBy?: string, searchedPhrase?: string): void
   {
     this.storeService.getAll(limit, offset, orderBy, isDescending, filterBy, searchedPhrase).subscribe((productEnvelope) => {
@@ -117,9 +116,7 @@ export class StoreListComponent implements OnInit, OnDestroy{
     this.getProducts(this.pageSize, this.page * this.pageSize, this.orderBy, this.isDescending, this.filterBy, this.searchedPhrase);
   }
 
-  onAddEditBtnClick(): void {
-    if(this.selection.isEmpty()){
-      this.router.navigateByUrl('store/add');
-    }
+  onEditBtnClick(product: Product): void {
+   console.log(product)
   }
 }

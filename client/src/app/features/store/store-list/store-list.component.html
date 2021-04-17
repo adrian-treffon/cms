@@ -12,7 +12,6 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-stroked-button class="button" (click)="onAddEditBtnClick()">{{!isSelected ? "Edytuj" : "Dodaj"}}</button>
   </div>
     <mat-paginator [pageSizeOptions]="[10, 15, 20]" 
       [length]="totalItems" 
@@ -22,15 +21,6 @@
 </div>
 <div class="table-container">
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
-    <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()"
-                      (change)="$event ? selection.toggle(row) : null"
-                      [checked]="selection.isSelected(row)">
-        </mat-checkbox>
-      </td>
-    </ng-container>
     <ng-container matColumnDef="sku">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> SKU </th>
       <td mat-cell *matCellDef="let element"> {{element.sku}} </td>
@@ -86,6 +76,10 @@
     <ng-container matColumnDef="type">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Typ </th>
       <td mat-cell *matCellDef="let element"> {{element.type.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element"> <button mat-stroked-button  (click)="onEditBtnClick(element)">Edytuj</button> </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

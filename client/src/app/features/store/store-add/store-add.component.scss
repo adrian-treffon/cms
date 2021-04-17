@@ -1,3 +1,5 @@
+.store-add-container{
+  margin-bottom: 100px;
 .form-element{
   width: 100%;
   padding: 15px;
@@ -5,17 +7,17 @@
 }
 
 mat-grid-list{
-  margin: 0 40px;
+  margin: 0 100px;
 }
 
 .description{
   display: block;
-  margin: 0 40px;
-  width: 93%;
+  margin: 0 100px;
+  width: 86%;
 }
 
 .sumbit {
-  margin: 0 -80px;
+  margin: 0 -120px;
 }
 
 .submit-button{
@@ -23,4 +25,10 @@ mat-grid-list{
   display: block;
   margin: auto;
   margin-right: 0;
+}
+
+h1{
+  margin: 0 100px;
+  padding: 15px;
+}
 }
