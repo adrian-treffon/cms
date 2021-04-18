@@ -23,4 +23,5 @@ export interface Product
     category : Category,
     producer: Producer,
     type : ProductType,
+    parameters : string,
 }

@@ -32,4 +32,12 @@ export class StoreService {
   create(product: Product): Observable<any> {
    return this.http.post(this.baseUrl + 'product', product);
   }
+
+  edit(product: Product): Observable<any> {
+    return this.http.put(this.baseUrl + 'product', product);
+   }
+
+   getById(productId: string): Observable<Product> {
+    return this.http.get<Product>(this.baseUrl + 'product/' + productId);
+   }
 }

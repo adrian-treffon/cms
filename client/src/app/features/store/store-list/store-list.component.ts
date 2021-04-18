@@ -117,6 +117,6 @@ export class StoreListComponent implements OnInit, OnDestroy{
   }
 
   onEditBtnClick(product: Product): void {
-   console.log(product)
+    this.router.navigate([`store/${product.id}`], { state: { product } });
   }
 }

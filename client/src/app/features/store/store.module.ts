@@ -6,6 +6,8 @@ import { StoreListComponent } from './store-list/store-list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { StoreAddComponent } from './store-add/store-add.component';
 import { DynamicFormInputComponent } from 'src/app/core/components/dynamic-form-input/dynamic-form-input.component';
+import { StoreEditComponent } from './store-edit/store-edit.component';
+import { StoreFormComponent } from './store-form/store-form.component';
 
 
 const routes: Routes = [
@@ -16,12 +18,16 @@ const routes: Routes = [
 {
   path: 'add',
   component: StoreAddComponent
+},
+{
+  path: ':id',
+  component: StoreEditComponent
 }];
 
 
 
 @NgModule({
-  declarations: [StoreComponent, StoreListComponent, StoreAddComponent],
+  declarations: [StoreComponent, StoreListComponent, StoreAddComponent, StoreEditComponent, StoreFormComponent],
   imports: [
     CommonModule,
     SharedModule,
