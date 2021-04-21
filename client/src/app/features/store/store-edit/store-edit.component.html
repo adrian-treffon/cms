@@ -1,0 +1,3 @@
+<div class="store-edit-container">
+  <app-store-form  *ngIf="loaded" [formGroup]="formGroup" [formBuilder]="formBuilder" [mode]="'EDIT'" [product]="product" (onSubmit)="onSubmit()"></app-store-form>
+</div>

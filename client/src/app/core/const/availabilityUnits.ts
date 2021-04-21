@@ -1,0 +1,1 @@
+export const availabilityUnits: string[] = ['szt.', 'kg', 'zestawy'];

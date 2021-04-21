@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using api.Entities;
 
-namespace api.Intefaces
+namespace api.Interfaces
 {
     public interface IUserRepository
     {

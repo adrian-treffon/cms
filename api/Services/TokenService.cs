@@ -2,7 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using api.Entities;
-using api.Intefaces;
+using api.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System;

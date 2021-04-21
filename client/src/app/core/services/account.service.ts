@@ -40,9 +40,9 @@ export class AccountService {
     );
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null!);
-    this.router.navigateByUrl("/login");
+    this.router.navigateByUrl('/login');
   }
 }

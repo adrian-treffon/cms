@@ -1,3 +1,5 @@
+using api.DTOs;
+using api.Entities;
 using AutoMapper;
 
 namespace api.Helpers

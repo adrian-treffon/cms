@@ -1,6 +1,6 @@
 .mat-sidenav-container {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 99%;
   background: transparent;
   position: fixed;
 }
@@ -9,5 +9,16 @@
   min-width: 200px !important;
 }
 .content {
-  padding: 10px;
+  margin: 0 10px 10px 10px;
+  box-sizing: content-box;
+  height: 99%;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0 15px!important;
+}
+
+::ng-deep .mat-drawer-content
+{
+  height: auto !important;
 }
