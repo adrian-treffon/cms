@@ -15,4 +15,8 @@ export class ProductTypeService {
   getAll(): Observable<ProductType[]> {
     return this.http.get<ProductType[]>(this.baseUrl + 'productType');
   }
+
+  add(name: string, parameters: string): Observable<void> {
+    return this.http.post<void>(this.baseUrl + 'productType', { name, parameters});
+  }
 }

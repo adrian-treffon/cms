@@ -1,3 +1,4 @@
+<mat-card class="card">
 <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()" class="form">
   <h1>{{mode == 'ADD' ? 'Dodaj nowy produkt' : 'Edytuj istniejący produkt'}}</h1>
   <mat-grid-list cols="3" [rowHeight]="'70px'">
@@ -170,3 +171,4 @@
     <button mat-stroked-button color="primary" type="submit" class="submit-button">{{mode == 'ADD' ? 'Dodaj produkt' : 'Edytuj produkt'}}</button>
   </div>
 </form>
+</mat-card>

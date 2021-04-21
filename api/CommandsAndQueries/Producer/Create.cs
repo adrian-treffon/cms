@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using api.Data;
@@ -31,8 +32,11 @@ namespace api.CommandsAndQueries.Producer
 
         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
-            Entities.Producer producer = new Entities.Producer{Name = request.Name};
-            _context.Producers.Add(producer);
+            var producer = _context.Producers.FirstOrDefault(x => x.Name == request.Name);
+            if(producer != null) throw new Exception($"Producer with name {request.Name} already exist");
+
+            Entities.Producer newProducer = new Entities.Producer{Name = request.Name};
+            _context.Producers.Add(newProducer);
 
             var success = await _context.SaveChangesAsync() > 0;
             if (success) return Unit.Value;

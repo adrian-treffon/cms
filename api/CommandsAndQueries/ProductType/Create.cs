@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using api.Data;
@@ -33,8 +34,11 @@ namespace api.CommandsAndQueries.ProductType
 
         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
-            Entities.ProductType productType = new Entities.ProductType{Name = request.Name, Parameters = request.Parameters};
-            _context.ProductTypes.Add(productType);
+            var productType = _context.ProductTypes.FirstOrDefault(x => x.Name == request.Name);
+            if(productType != null) throw new Exception($"Product type with name {request.Name} already exist");
+            
+            Entities.ProductType newProductType = new Entities.ProductType{Name = request.Name, Parameters = request.Parameters};
+            _context.ProductTypes.Add(newProductType);
 
             var success = await _context.SaveChangesAsync() > 0;
             if (success) return Unit.Value;

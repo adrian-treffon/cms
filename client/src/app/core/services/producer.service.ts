@@ -15,4 +15,8 @@ export class ProducerService {
   getAll(): Observable<Producer[]> {
     return this.http.get<Producer[]>(this.baseUrl + 'producer');
   }
+
+  add(name: string): Observable<void> {
+    return this.http.post<void>(this.baseUrl + 'producer', { name });
+  }
 }
