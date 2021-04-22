@@ -35,7 +35,7 @@ namespace api.CommandsAndQueries.Category
             var category = _context.Categories.FirstOrDefault(x => x.Name == request.Name);
             if(category != null) throw new Exception($"Category with name {request.Name} already exist");
 
-            Entities.Category newCategory = new Entities.Category{Name = request.Name};
+            Entities.Category newCategory = new Entities.Category{Name = request.Name, IsActive = true};
             _context.Categories.Add(newCategory);
 
             var success = await _context.SaveChangesAsync() > 0;

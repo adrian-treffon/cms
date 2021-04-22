@@ -14,7 +14,7 @@ import { ProductTypeAddComponent } from './product-type-add/product-type-add.com
   styleUrls: ['./store-settings.component.scss']
 })
 export class StoreSettingsComponent {
-
+  view: string = 'producers';
   constructor(private readonly dialog: MatDialog, 
               private readonly producerSerivce: ProducerService,
               private readonly categorySerivce: CategoryService,
@@ -71,5 +71,9 @@ export class StoreSettingsComponent {
       });
     }
     });
+  }
+
+  onViewChange(): void {
+    
   }
 }

@@ -34,7 +34,7 @@ namespace api.CommandsAndQueries.Category
         {
             Entities.Category category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == request.Id);
             if(category == null) throw new Exception($"Category with id {request.Id} does not exists");
-            _context.Categories.Remove(category);
+            category.IsActive = false;
         
             var success = await _context.SaveChangesAsync() > 0;
             if (success) return Unit.Value;

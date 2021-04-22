@@ -44,16 +44,35 @@ export class StoreFormComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.producerService.getAll().toPromise().then(producers => {
-      this.producerOptions = producers.map(producer => ({value: producer.id, viewValue: producer.name}));
+      if (this.mode === 'EDIT')
+      {
+        this.producerOptions = producers.map(producer => ({value: producer.id, viewValue: producer.name}));
+      }else if (this.mode === 'ADD')
+      {
+        this.producerOptions = producers.filter(x => x.isActive).map(category => ({value: category.id, viewValue: category.name}));
+      }
     });
 
     await this.categoryService.getAll().toPromise().then(categories => {
-      this.categoryOptions = categories.map(category => ({value: category.id, viewValue: category.name}));
+      if (this.mode === 'EDIT')
+      {
+        this.categoryOptions = categories.map(category => ({value: category.id, viewValue: category.name}));
+      }else if (this.mode === 'ADD')
+      {
+        this.categoryOptions = categories.filter(x => x.isActive).map(category => ({value: category.id, viewValue: category.name}));
+      }
     });
 
     await this.productTypeService.getAll().toPromise().then(productTypes => {
-      this.productTypeOptions = productTypes.map(productType => ({value: productType.id, viewValue: productType.name}));
-      this.productTypes = productTypes;
+      if (this.mode === 'ADD')
+      {
+        this.productTypeOptions = productTypes.filter(x => x.isActive).map(productType => ({value: productType.id, viewValue: productType.name}));
+        this.productTypes = productTypes.filter(x => x.isActive);
+      }else if (this.mode === 'EDIT')
+      {
+        this.productTypeOptions = productTypes.map(productType => ({value: productType.id, viewValue: productType.name}));
+        this.productTypes = productTypes;
+      }
     }).then(() => { this.createParametersForm(); });
 
     this.availabilityUnitsOptions = availabilityUnits.map(availabilityUnit => ({value: availabilityUnit, viewValue: availabilityUnit}));

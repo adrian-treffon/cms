@@ -37,7 +37,7 @@ namespace api.CommandsAndQueries.ProductType
             var productType = _context.ProductTypes.FirstOrDefault(x => x.Name == request.Name);
             if(productType != null) throw new Exception($"Product type with name {request.Name} already exist");
             
-            Entities.ProductType newProductType = new Entities.ProductType{Name = request.Name, Parameters = request.Parameters};
+            Entities.ProductType newProductType = new Entities.ProductType{Name = request.Name, Parameters = request.Parameters, IsActive = true};
             _context.ProductTypes.Add(newProductType);
 
             var success = await _context.SaveChangesAsync() > 0;

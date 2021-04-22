@@ -6,6 +6,9 @@ import { StoreSettingsComponent } from './store-settings.component';
 import { RouterModule, Routes } from '@angular/router';
 import { CategoryAddComponent } from './category-add/category-add.component';
 import { ProductTypeAddComponent } from './product-type-add/product-type-add.component';
+import { CategoryListComponent } from './category-list/category-list.component';
+import { ProducerListComponent } from './producer-list/producer-list.component';
+import { ProductTypeListComponent } from './product-type-list/product-type-list.component';
 
 
 const routes: Routes = [{
@@ -14,7 +17,7 @@ const routes: Routes = [{
 }];
 
 @NgModule({
-  declarations: [ProducerAddComponent, StoreSettingsComponent, CategoryAddComponent, ProductTypeAddComponent],
+  declarations: [ProducerAddComponent, StoreSettingsComponent, CategoryAddComponent, ProductTypeAddComponent, CategoryListComponent, ProducerListComponent, ProductTypeListComponent],
   imports: [
     CommonModule,
     SharedModule,

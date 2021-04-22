@@ -35,7 +35,7 @@ namespace api.CommandsAndQueries.Producer
             var producer = _context.Producers.FirstOrDefault(x => x.Name == request.Name);
             if(producer != null) throw new Exception($"Producer with name {request.Name} already exist");
 
-            Entities.Producer newProducer = new Entities.Producer{Name = request.Name};
+            Entities.Producer newProducer = new Entities.Producer{Name = request.Name, IsActive = true};
             _context.Producers.Add(newProducer);
 
             var success = await _context.SaveChangesAsync() > 0;
