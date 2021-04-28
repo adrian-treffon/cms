@@ -34,7 +34,7 @@ namespace api.CommandsAndQueries.Producer
         {
            Entities.Producer producer = await _context.Producers.FirstOrDefaultAsync(x => x.Id == request.Id);
            if(producer == null) throw new Exception($"Producer with id {request.Id} does not exists");
-           _context.Producers.Remove(producer);
+           producer.IsActive = false;
        
             var success = await _context.SaveChangesAsync() > 0;
             if (success) return Unit.Value;

@@ -1,5 +1,6 @@
 export interface ProductType {
-  id : string,
-  name: string,
-  parameters: string,
+  id: string;
+  name: string;
+  parameters: string;
+  isActive: boolean;
 }

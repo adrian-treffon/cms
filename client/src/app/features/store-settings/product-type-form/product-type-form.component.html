@@ -1,0 +1,33 @@
+<form [formGroup]="formGroup" (ngSubmit)="closeDialog()" class="form">
+  <h1 mat-dialog-title>{{productType ? 'Edytuj' : 'Dodaj'}} typ produktu</h1>
+  <div mat-dialog-content>
+    <mat-form-field class="form-field">
+      <mat-label>Nazwa</mat-label>
+      <input matInput formControlName="name" required>
+      <mat-error *ngIf="formGroup.controls['name'].touched && formGroup.controls['name'].invalid">
+        <span *ngIf="formGroup.controls['name'].errors?.required">To pole jest obowiązkowe</span>
+      </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field class="form-field">
+      <mat-label>Parametry</mat-label>
+        <input matInput [(ngModel)]="parameter" [ngModelOptions]="{standalone: true}">
+        <button type="button" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="onParameterAdd()" [disabled]="parameter.length == 0">
+          <mat-icon>add</mat-icon>
+        </button>
+      <mat-error *ngIf="formGroup.controls['parameters'].touched && formGroup.controls['parameters'].invalid">
+        <span *ngIf="formGroup.controls['parameters'].errors?.required">To pole jest obowiązkowe</span>
+      </mat-error>
+    </mat-form-field>
+    <mat-selection-list [multiple]="false" class="list" (selectionChange)="onSelect($event)">
+      <mat-label [hidden]="parameters.length == 0">Wybrane parametry:</mat-label>
+      <mat-list-option *ngFor="let parameter of parameters" [value]="parameter" class="option">
+        {{parameter}}
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button type="reset" (click)="onCancel()">Anuluj</button>
+    <button mat-button type="submit" [disabled]="formGroup.invalid">{{productType ? 'Edytuj' : 'Dodaj'}}</button>
+  </div>
+  </form>

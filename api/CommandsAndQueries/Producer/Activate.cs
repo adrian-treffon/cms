@@ -6,9 +6,9 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.CommandsAndQueries.ProductType
+namespace api.CommandsAndQueries.Producer
 {
-    public class Remove
+    public class Activate
     {
       public class Command : IRequest
       {
@@ -32,14 +32,14 @@ namespace api.CommandsAndQueries.ProductType
 
         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
-           Entities.ProductType productType = await _context.ProductTypes.FirstOrDefaultAsync(x => x.Id == request.Id);
-           if(productType == null) throw new Exception($"Product type with id {request.Id} does not exists");
-           productType.IsActive = false;
+           Entities.Producer producer = await _context.Producers.FirstOrDefaultAsync(x => x.Id == request.Id);
+           if(producer == null) throw new Exception($"Producer with id {request.Id} does not exists");
+           producer.IsActive = true;
        
             var success = await _context.SaveChangesAsync() > 0;
             if (success) return Unit.Value;
             throw new Exception("Problem saving changes");
         }
     }
-  }
+    }
 }

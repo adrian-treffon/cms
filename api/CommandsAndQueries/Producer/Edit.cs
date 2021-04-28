@@ -6,13 +6,14 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.CommandsAndQueries.ProductType
+namespace api.CommandsAndQueries.Producer
 {
-    public class Remove
+    public class Edit
     {
       public class Command : IRequest
       {
         public int Id { get; set; }
+        public string Name { get; set; }
       }
 
       public class CommandValidator : AbstractValidator<Command>
@@ -20,6 +21,7 @@ namespace api.CommandsAndQueries.ProductType
         public CommandValidator()
         {
           RuleFor(x => x.Id).NotEmpty();
+          RuleFor(x => x.Name).NotEmpty();
         }
       }
       public class Handler : IRequestHandler<Command>
@@ -32,14 +34,15 @@ namespace api.CommandsAndQueries.ProductType
 
         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
-           Entities.ProductType productType = await _context.ProductTypes.FirstOrDefaultAsync(x => x.Id == request.Id);
-           if(productType == null) throw new Exception($"Product type with id {request.Id} does not exists");
-           productType.IsActive = false;
-       
-            var success = await _context.SaveChangesAsync() > 0;
-            if (success) return Unit.Value;
-            throw new Exception("Problem saving changes");
+           Entities.Producer producer = await _context.Producers.FirstOrDefaultAsync(x => x.Id == request.Id);
+           if(producer == null) throw new Exception($"Producer with id {request.Id} does not exists");
+           if(producer.Name != request.Name)
+           {
+              producer.Name = request.Name;
+              await _context.SaveChangesAsync();
+           }
+            return Unit.Value;
         }
     }
-  }
+    }
 }

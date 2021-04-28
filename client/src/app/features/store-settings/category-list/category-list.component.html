@@ -1,0 +1,34 @@
+<div class="store-list-container">
+  <div class="utils-container">
+    <mat-paginator [pageSizeOptions]="[10, 15, 20]" 
+      [length]="totalItems" 
+      [pageIndex]="page">
+  </mat-paginator>
+</div>
+<div class="table-container">
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nazwa </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="isActive">
+      <th mat-header-cell *matHeaderCellDef> Aktywny </th>
+      <td mat-cell *matCellDef="let element"> {{element.isActive ? 'Tak' : 'Nie'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Akcje</th>
+      <td mat-cell *matCellDef="let element"> 
+        <button mat-stroked-button (click)="onEditClick(element)">Edytuj</button> 
+        <span *ngIf="element.isActive"><button mat-stroked-button class="action-btn" (click)="onDeactivateClick(element.id)">Deaktywuj</button></span>
+        <span *ngIf="!element.isActive"><button mat-stroked-button class="action-btn" (click)="onActivateClick(element.id)">Aktywuj</button></span>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+</div>

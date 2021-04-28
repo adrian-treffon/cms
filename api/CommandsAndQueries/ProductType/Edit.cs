@@ -8,11 +8,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.CommandsAndQueries.ProductType
 {
-    public class Remove
+    public class Edit
     {
       public class Command : IRequest
       {
         public int Id { get; set; }
+        public string Parameters { get; set; }
+        public string Name { get; set; }
       }
 
       public class CommandValidator : AbstractValidator<Command>
@@ -20,6 +22,8 @@ namespace api.CommandsAndQueries.ProductType
         public CommandValidator()
         {
           RuleFor(x => x.Id).NotEmpty();
+          RuleFor(x => x.Parameters).NotEmpty();
+          RuleFor(x => x.Name).NotEmpty();
         }
       }
       public class Handler : IRequestHandler<Command>
@@ -34,12 +38,15 @@ namespace api.CommandsAndQueries.ProductType
         {
            Entities.ProductType productType = await _context.ProductTypes.FirstOrDefaultAsync(x => x.Id == request.Id);
            if(productType == null) throw new Exception($"Product type with id {request.Id} does not exists");
-           productType.IsActive = false;
-       
-            var success = await _context.SaveChangesAsync() > 0;
-            if (success) return Unit.Value;
-            throw new Exception("Problem saving changes");
+           if(productType.Name != request.Name || 
+              productType.Parameters != request.Parameters)
+           {
+              productType.Name = request.Name;
+              productType.Parameters = request.Parameters;
+              await _context.SaveChangesAsync();
+           }
+           return Unit.Value;
         }
     }
-  }
+    }
 }

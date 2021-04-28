@@ -1,0 +1,16 @@
+<form [formGroup]="formGroup" (ngSubmit)="closeDialog()" class="form">
+  <h1 mat-dialog-title>{{producer ? 'Edytuj' : 'Dodaj'}} producenta</h1>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Nazwa</mat-label>
+      <input matInput formControlName="name" required>
+      <mat-error *ngIf="formGroup.controls['name'].touched && formGroup.controls['name'].invalid">
+        <span *ngIf="formGroup.controls['name'].errors?.required">To pole jest obowiązkowe</span>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button type="reset" (click)="onCancel()">Anuluj</button>
+    <button mat-button type="submit" [disabled]="formGroup.invalid">{{producer ? 'Edytuj' : 'Dodaj'}}</button>
+  </div>
+  </form>

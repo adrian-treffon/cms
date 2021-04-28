@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using api.Data;
@@ -31,8 +32,11 @@ namespace api.CommandsAndQueries.Category
 
         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
-            Entities.Category category = new Entities.Category{Name = request.Name};
-            _context.Categories.Add(category);
+            var category = _context.Categories.FirstOrDefault(x => x.Name == request.Name);
+            if(category != null) throw new Exception($"Category with name {request.Name} already exist");
+
+            Entities.Category newCategory = new Entities.Category{Name = request.Name, IsActive = true};
+            _context.Categories.Add(newCategory);
 
             var success = await _context.SaveChangesAsync() > 0;
             if (success) return Unit.Value;

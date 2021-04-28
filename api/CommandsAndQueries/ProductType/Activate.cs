@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.CommandsAndQueries.ProductType
 {
-    public class Remove
+    public class Activate
     {
-      public class Command : IRequest
+        public class Command : IRequest
       {
         public int Id { get; set; }
       }
@@ -34,12 +34,12 @@ namespace api.CommandsAndQueries.ProductType
         {
            Entities.ProductType productType = await _context.ProductTypes.FirstOrDefaultAsync(x => x.Id == request.Id);
            if(productType == null) throw new Exception($"Product type with id {request.Id} does not exists");
-           productType.IsActive = false;
+           productType.IsActive = true;
        
             var success = await _context.SaveChangesAsync() > 0;
             if (success) return Unit.Value;
             throw new Exception("Problem saving changes");
         }
     }
-  }
+    }
 }
