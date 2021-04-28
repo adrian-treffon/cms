@@ -1,5 +1,5 @@
 <form [formGroup]="formGroup" (ngSubmit)="closeDialog()" class="form">
-  <h1 mat-dialog-title>Dodaj typ produktu</h1>
+  <h1 mat-dialog-title>{{productType ? 'Edytuj' : 'Dodaj'}} typ produktu</h1>
   <div mat-dialog-content>
     <mat-form-field class="form-field">
       <mat-label>Nazwa</mat-label>
@@ -11,7 +11,7 @@
     
     <mat-form-field class="form-field">
       <mat-label>Parametry</mat-label>
-        <input matInput [(ngModel)]="this.parameter" [ngModelOptions]="{standalone: true}">
+        <input matInput [(ngModel)]="parameter" [ngModelOptions]="{standalone: true}">
         <button type="button" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="onParameterAdd()" [disabled]="parameter.length == 0">
           <mat-icon>add</mat-icon>
         </button>
@@ -28,6 +28,6 @@
   </div>
   <div mat-dialog-actions>
     <button mat-button type="reset" (click)="onCancel()">Anuluj</button>
-    <button mat-button type="submit" [disabled]="formGroup.invalid">Dodaj</button>
+    <button mat-button type="submit" [disabled]="formGroup.invalid">{{productType ? 'Edytuj' : 'Dodaj'}}</button>
   </div>
   </form>

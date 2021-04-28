@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { ProducerService } from 'src/app/core/services/producer.service';
 import { ProductTypeService } from 'src/app/core/services/product-type.service';
-import { CategoryAddComponent } from './category-add/category-add.component';
-import { ProducerAddComponent } from './producer-add/producer-add.component';
-import { ProductTypeAddComponent } from './product-type-add/product-type-add.component';
+import { CategoryFormComponent } from './category-form/category-form.component';
+import { ProducerFormComponent } from './producer-form/producer-form.component';
+import { ProductTypeFormComponent } from './product-type-form/product-type-form.component';
 
 @Component({
   selector: 'app-store-settings',
@@ -15,6 +16,8 @@ import { ProductTypeAddComponent } from './product-type-add/product-type-add.com
 })
 export class StoreSettingsComponent {
   view: string = 'producers';
+  eventsSubject: Subject<void> = new Subject<void>();
+  
   constructor(private readonly dialog: MatDialog, 
               private readonly producerSerivce: ProducerService,
               private readonly categorySerivce: CategoryService,
@@ -22,15 +25,16 @@ export class StoreSettingsComponent {
               private readonly toastr: ToastrService) { }
 
   openAddProducerDialog(): void {
-    const dialogRef = this.dialog.open(ProducerAddComponent, {
+    const dialogRef = this.dialog.open(ProducerFormComponent, {
       width: '250px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result)
       {
-        this.producerSerivce.add(result).subscribe(() => {
+        this.producerSerivce.add(result.name).subscribe(() => {
           this.toastr.success('Dodano producenta');
+          this.emitEventToChild();
       }, (error) => {
           this.toastr.error('Nie udało się dodać producenta');
       });
@@ -39,15 +43,16 @@ export class StoreSettingsComponent {
   }
 
   openAddCategoryDialog(): void {
-    const dialogRef = this.dialog.open(CategoryAddComponent, {
+    const dialogRef = this.dialog.open(CategoryFormComponent, {
       width: '250px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result)
       {
-        this.categorySerivce.add(result).subscribe(() => {
+        this.categorySerivce.add(result.name).subscribe(() => {
           this.toastr.success('Dodano kategorię');
+          this.emitEventToChild();
       }, (error) => {
           this.toastr.error('Nie udało się dodać kategorii');
       });
@@ -55,17 +60,17 @@ export class StoreSettingsComponent {
     });
   }
 
-  openAddproductTypeDialog(): void {
-    const dialogRef = this.dialog.open(ProductTypeAddComponent, {
+  openAddProductTypeDialog(): void {
+    const dialogRef = this.dialog.open(ProductTypeFormComponent, {
       width: '400px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result)
       {
-        console.log(result);
         this.productTypeSerivce.add(result.name, result.parameters).subscribe(() => {
           this.toastr.success('Dodano typ produktu');
+          this.emitEventToChild();
       }, (error) => {
           this.toastr.error('Nie udało się dodać typu produktu');
       });
@@ -73,7 +78,7 @@ export class StoreSettingsComponent {
     });
   }
 
-  onViewChange(): void {
-    
+  emitEventToChild(): void {
+    this.eventsSubject.next();
   }
 }

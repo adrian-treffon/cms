@@ -28,4 +28,8 @@ export class ProductTypeService {
   activate(id: number): Observable<void> {
     return this.http.put<void>(this.baseUrl + 'productType', id);
   }
+
+  edit(productType: ProductType): Observable<void> {
+    return this.http.put<void>(this.baseUrl + 'productType/edit', productType);
+  }
 }

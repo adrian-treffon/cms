@@ -8,21 +8,29 @@
   </mat-button-toggle-group>
 
   <div class="buttons">
-    <button mat-stroked-button (click)="openAddProducerDialog()">Dodaj producenta</button>
-    <button mat-stroked-button (click)="openAddCategoryDialog()">Dodaj kategorię</button>
-    <button mat-stroked-button (click)="openAddproductTypeDialog()">Dodaj typ produktu</button>
+    <div *ngIf="view == 'producers'">
+      <button mat-stroked-button (click)="openAddProducerDialog()">Dodaj producenta</button>
+    </div>
+    
+    <div *ngIf="view == 'categories'">
+      <button mat-stroked-button (click)="openAddCategoryDialog()">Dodaj kategorię</button>
+    </div>
+    
+    <div *ngIf="view == 'productTypes'">
+      <button mat-stroked-button (click)="openAddProductTypeDialog()">Dodaj typ produktu</button>
+    </div>
   </div>
 </div>
 
 
 <div *ngIf="view == 'producers'">
-  <app-producer-list></app-producer-list>
+  <app-producer-list [events]="eventsSubject.asObservable()"></app-producer-list>
 </div>
 
 <div *ngIf="view == 'categories'">
-  <app-category-list></app-category-list>
+  <app-category-list [events]="eventsSubject.asObservable()"></app-category-list>
 </div>
 
 <div *ngIf="view == 'productTypes'">
-  <app-product-type-list></app-product-type-list>
+  <app-product-type-list [events]="eventsSubject.asObservable()"></app-product-type-list>
 </div>

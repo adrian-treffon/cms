@@ -1,5 +1,5 @@
 <form [formGroup]="formGroup" (ngSubmit)="closeDialog()" class="form">
-  <h1 mat-dialog-title>Dodaj kategorię</h1>
+  <h1 mat-dialog-title>{{category ? 'Edytuj' : 'Dodaj'}} kategorię</h1>
   <div mat-dialog-content>
     <mat-form-field>
       <mat-label>Nazwa</mat-label>
@@ -11,6 +11,6 @@
   </div>
   <div mat-dialog-actions>
     <button mat-button type="reset" (click)="onCancel()">Anuluj</button>
-    <button mat-button type="submit" [disabled]="formGroup.invalid">Dodaj</button>
+    <button mat-button type="submit" [disabled]="formGroup.invalid">{{category ? 'Edytuj' : 'Dodaj'}}</button>
   </div>
   </form>

@@ -13,7 +13,7 @@ namespace api.Controllers
       public async Task<ActionResult<Unit>> Create(Create.Command command)
         => await Mediator.Send(command);
       
-     [HttpDelete]
+      [HttpDelete]
       public async Task<ActionResult<Unit>> Remove([FromQuery]int id)
         => await Mediator.Send(new Remove.Command() {Id = id});
 
@@ -24,5 +24,9 @@ namespace api.Controllers
       [HttpPut]
       public async Task<ActionResult<Unit>> Activate([FromBody]int id)
         => await Mediator.Send(new Activate.Command() {Id = id});
+
+      [HttpPut("edit")]
+      public async Task<ActionResult<Unit>> Edit([FromBody]Edit.Command command)
+        => await Mediator.Send(command);
     }
 }

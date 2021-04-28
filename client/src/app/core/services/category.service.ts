@@ -28,4 +28,8 @@ export class CategoryService {
   activate(id: number): Observable<void> {
     return this.http.put<void>(this.baseUrl + 'category', id);
   }
+
+  edit(category: Category): Observable<void> {
+    return this.http.put<void>(this.baseUrl + 'category/edit', category);
+  }
 }

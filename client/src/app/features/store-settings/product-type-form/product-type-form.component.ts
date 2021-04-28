@@ -1,23 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectionListChange } from '@angular/material/list';
+import { ProductType } from 'src/app/core/models/productType';
 
 @Component({
-  selector: 'app-product-type-add',
-  templateUrl: './product-type-add.component.html',
-  styleUrls: ['./product-type-add.component.scss']
+  selector: 'app-product-type-form',
+  templateUrl: './product-type-form.component.html',
+  styleUrls: ['./product-type-form.component.scss']
 })
-export class ProductTypeAddComponent implements OnInit {
+export class ProductTypeFormComponent implements OnInit {
+
   formGroup!: FormGroup;
-  parameter: string = "";
+  parameter: string = '';
   parameters: string[] = [];
   parametersObject: any = {};
-  constructor(public dialogRef: MatDialogRef<ProductTypeAddComponent>,
-              public readonly formBuilder: FormBuilder) {}
+  constructor(public dialogRef: MatDialogRef<ProductTypeFormComponent>,
+              public readonly formBuilder: FormBuilder,
+              @Inject(MAT_DIALOG_DATA) public productType: ProductType) {}
 
   ngOnInit(): void {
     this.createForm();
+    if(this.productType)
+    {
+      const params = JSON.parse(this.productType.parameters);
+      this.parameters = Object.keys(params);
+    }
   }
 
   closeDialog(): void {
@@ -38,8 +46,9 @@ export class ProductTypeAddComponent implements OnInit {
 
   createForm(): void {
     this.formGroup = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      parameters: ['', [Validators.required]]
+      id: [this.productType ? this.productType.id : ''],
+      name: [this.productType ? this.productType.name : '', [Validators.required]],
+      parameters: [this.productType ? this.productType.parameters : '', [Validators.required]]
     });
   }
 
@@ -52,4 +61,5 @@ export class ProductTypeAddComponent implements OnInit {
       // tslint:disable-next-line: no-non-null-assertion
       this.formGroup.get('parameters')!.setValue(paramsToAdd === '{}' ? '' : paramsToAdd);
   }
+
 }

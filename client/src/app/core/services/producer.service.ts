@@ -28,4 +28,8 @@ export class ProducerService {
   activate(id: number): Observable<void> {
     return this.http.put<void>(this.baseUrl + 'producer', id);
   }
+
+  edit(producer: Producer): Observable<void> {
+    return this.http.put<void>(this.baseUrl + 'producer/edit', producer);
+  }
 }
