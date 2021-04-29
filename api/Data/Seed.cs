@@ -17,6 +17,12 @@ namespace api.Data
             await AddProducers(context);
             await AddProductTypes(context);
             await AddProducts(context);
+            await AddDeliveryTypes(context);
+            await AddCustomers(context);
+            await AddDeliveries(context);
+            await AddOrders(context);
+            await AddProductOrders(context);
+
         }
 
         private static async Task AddAdmin(DataContext context)
@@ -109,6 +115,109 @@ namespace api.Data
             };
 
             context.Products.AddRange(products); 
+            await context.SaveChangesAsync();
+        }
+
+         private static async Task AddDeliveryTypes(DataContext context)
+         {
+            if(await context.DeliveryTypes.AnyAsync()) return;
+           
+            List<DeliveryType> deliveryTypes = new List<DeliveryType>()
+            {
+              new DeliveryType{ Name = "Poczta Polska", Price = 7.5F },
+              new DeliveryType{ Name = "DPD",  Price = 13  },
+              new DeliveryType{ Name = "FedEx" , Price = 10 },
+            };
+
+            context.DeliveryTypes.AddRange(deliveryTypes); 
+            await context.SaveChangesAsync();
+        }
+
+         private static async Task AddCustomers(DataContext context)
+         {
+            if(await context.Customers.AnyAsync()) return;
+           
+            List<Customer> customers = new List<Customer>()
+            {
+              new Customer{ 
+                Mail = "jan.nowak@wp.pl",
+                NIP = "0123456789",
+                Phone = "+48 667 233 455",
+                Address = new Address {
+                  City = "Kraków",
+                  Name = "Jan Nowak",
+                  PostalCode = "30-063",
+                  Street = "Raciborska 12"
+                },
+                ShipAddress = new Address {
+                  City = "Katowice",
+                  Name = "Jan Nowak",
+                  PostalCode = "40-001",
+                  Street = "Chorzowska 15"
+                }
+               },
+            };
+
+            context.Customers.AddRange(customers); 
+            await context.SaveChangesAsync();
+        }
+         private static async Task AddDeliveries(DataContext context)
+         {
+            if(await context.Deliveries.AnyAsync()) return;
+           
+            List<Delivery> deliveries = new List<Delivery>()
+            {
+              new Delivery() {
+                COD = false,
+                ConsignmentNoteNumber = "ASD/12434",
+                CreatedAt = DateTime.Now.AddHours(10),
+                DeliveryTypeId = 1,
+                InsuranceAmount = 1000,
+                Insured = true
+              }
+            };
+
+            context.Deliveries.AddRange(deliveries); 
+            await context.SaveChangesAsync();
+        }
+
+         private static async Task AddOrders(DataContext context)
+         {
+            if(await context.Orders.AnyAsync()) return;
+           
+            List<Order> orders = new List<Order>()
+            {
+              new Order() {
+               CreatedAt = DateTime.Now,
+               CustomerId = 1,
+               DeliveryId = 1,
+               DeliveryPrice = (await context.DeliveryTypes.FindAsync(1)).Price,
+               ShippingAddressSameAsCustomer = true,
+               Status = OrderStatus.Send
+              }
+            };
+
+            context.Orders.AddRange(orders); 
+            await context.SaveChangesAsync();
+        }
+
+         private static async Task AddProductOrders(DataContext context)
+         {
+            if(await context.ProductOrders.AnyAsync()) return;
+           
+            List<ProductOrders> productOrders = new List<ProductOrders>()
+            {
+              new ProductOrders() {
+                 OrderId = 1,
+                 ProductId = 1,
+                 GrossPrice = 3149*2,
+                 VAT = 23,
+                 Quantity = 2,
+
+              }
+            };
+
+            context.ProductOrders.AddRange(productOrders); 
             await context.SaveChangesAsync();
         }
     }
