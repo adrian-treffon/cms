@@ -23,8 +23,7 @@ export class ProductTypeFormComponent implements OnInit {
     this.createForm();
     if(this.productType)
     {
-      const params = JSON.parse(this.productType.parameters);
-      this.parameters = Object.keys(params);
+      this.parameters = this.productType.parameters.split(';');
     }
   }
 
@@ -38,9 +37,8 @@ export class ProductTypeFormComponent implements OnInit {
 
   onParameterAdd(): void {
     this.parameters.push(this.parameter);
-    this.parametersObject[this.parameter] = "";
     // tslint:disable-next-line: no-non-null-assertion
-    this.formGroup.get('parameters')!.setValue(JSON.stringify(this.parametersObject));
+    this.formGroup.get('parameters')!.setValue(this.parameters.join(';'));
     this.parameter = '';
   }
 
@@ -55,11 +53,9 @@ export class ProductTypeFormComponent implements OnInit {
   onSelect(event: MatSelectionListChange): void {
       // tslint:disable-next-line: no-non-null-assertion
       const prop = event.source._value![0];
-      delete this.parametersObject[prop];
       this.parameters = this.parameters.filter(parameter => parameter !== prop);
-      const paramsToAdd = JSON.stringify(this.parametersObject);
       // tslint:disable-next-line: no-non-null-assertion
-      this.formGroup.get('parameters')!.setValue(paramsToAdd === '{}' ? '' : paramsToAdd);
+      this.formGroup.get('parameters')!.setValue(this.parameters.join(';'));
   }
 
 }

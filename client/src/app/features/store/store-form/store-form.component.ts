@@ -66,7 +66,8 @@ export class StoreFormComponent implements OnInit {
     await this.productTypeService.getAll().toPromise().then(productTypes => {
       if (this.mode === 'ADD')
       {
-        this.productTypeOptions = productTypes.filter(x => x.isActive).map(productType => ({value: productType.id, viewValue: productType.name}));
+        this.productTypeOptions = productTypes.filter(x => x.isActive)
+        .map(productType => ({value: productType.id, viewValue: productType.name}));
         this.productTypes = productTypes.filter(x => x.isActive);
       }else if (this.mode === 'EDIT')
       {
@@ -88,9 +89,10 @@ export class StoreFormComponent implements OnInit {
   {
     const productId = this.formGroup.get('typeId');
     if (productId === null || productId?.value === '') { return; }
+
     const productTypeParameters = this.productTypes.filter(x => x.id === productId.value)[0].parameters;
-    const formFields = JSON.parse(productTypeParameters);
-    this.formFields = Object.keys(formFields).map(key =>
+
+    this.formFields = productTypeParameters.split(';').map(key =>
       new FormField<string>({
       controlType: 'textbox',
       key,
@@ -99,12 +101,14 @@ export class StoreFormComponent implements OnInit {
     }));
 
     if (this.formGroup.get('parameters') != null) {this.formGroup.removeControl('parameters'); }
-    let formControlArray = null;
+    let formControlArray: any[] = [];
+
     if(this.product){
-      const parameters = JSON.parse(this.product.parameters);
-      formControlArray = Object.keys(formFields).map(key => ({[key] : [parameters[key], [Validators.required]]}));
+      formControlArray = this.product.parameters.split(';').filter(x => x !== '')
+      .map(key => ({[key.split(':')[0]] : [key.split(':')[1], [Validators.required]]}));
     } else {
-      formControlArray = Object.keys(formFields).map(key => ({[key] : ['', [Validators.required]]}));
+      formControlArray = productTypeParameters.split(';').filter(x => x !== '')
+      .map(key => ({[key] : ['', [Validators.required]]}));
     }
 
     const formControls = formControlArray.reduce((result: any, item: any) => {

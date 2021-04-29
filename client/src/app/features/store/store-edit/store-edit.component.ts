@@ -57,11 +57,15 @@ export class StoreEditComponent {
   }
 
   onSubmit(): void {
-    this.formGroup.value.parameters = JSON.stringify(this.formGroup.value.parameters);
+    let paramters  = '';
+    Object.keys(this.formGroup.value.parameters).forEach(key => {
+      paramters += `${key}:${this.formGroup.value.parameters[key]};`
+    });
+    this.formGroup.value.parameters = paramters;
     this.storeService.edit(this.formGroup.value).subscribe(() => {
       this.toastr.success('Zmiany zostały zapisane');
       this.router.navigateByUrl('store');
-    });
+     });
   }
 
 }

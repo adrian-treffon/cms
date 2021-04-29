@@ -42,7 +42,11 @@ export class StoreAddComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.formGroup.value.parameters = JSON.stringify(this.formGroup.value.parameters);
+    let paramters  = '';
+    Object.keys(this.formGroup.value.parameters).forEach(key => {
+      paramters += `${key}:${this.formGroup.value.parameters[key]};`
+    });
+    this.formGroup.value.parameters = paramters;
     this.storeService.create(this.formGroup.value).subscribe(() => {
       this.toastr.success('Produkt został dodany');
       this.router.navigateByUrl('store');
