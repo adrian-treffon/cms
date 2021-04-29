@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
 namespace cms.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210429142956_AddOrder")]
+    partial class AddOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -278,30 +280,6 @@ namespace cms.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("api.Entities.ProductOrders", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<float>("GrossPrice")
-                        .HasColumnType("REAL");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("VAT")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ProductId", "OrderId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("ProductOrders");
-                });
-
             modelBuilder.Entity("api.Entities.ProductType", b =>
                 {
                     b.Property<int>("Id")
@@ -392,25 +370,6 @@ namespace cms.Data.Migrations
                     b.Navigation("Producer");
 
                     b.Navigation("Type");
-                });
-
-            modelBuilder.Entity("api.Entities.ProductOrders", b =>
-                {
-                    b.HasOne("api.Entities.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }

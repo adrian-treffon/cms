@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
 namespace cms.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210428194256_AddCustomer")]
+    partial class AddCustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,87 +108,6 @@ namespace cms.Data.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("api.Entities.Delivery", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("COD")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ConsignmentNoteNumber")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("DeliveryTypeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<float>("InsuranceAmount")
-                        .HasColumnType("REAL");
-
-                    b.Property<bool>("Insured")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DeliveryTypeId");
-
-                    b.ToTable("Deliveries");
-                });
-
-            modelBuilder.Entity("api.Entities.DeliveryType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<float>("Price")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DeliveryTypes");
-                });
-
-            modelBuilder.Entity("api.Entities.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("DeliveryId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<float>("DeliveryPrice")
-                        .HasColumnType("REAL");
-
-                    b.Property<bool>("ShippingAddressSameAsCustomer")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("DeliveryId");
-
-                    b.ToTable("Orders");
-                });
-
             modelBuilder.Entity("api.Entities.Producer", b =>
                 {
                     b.Property<int>("Id")
@@ -278,30 +199,6 @@ namespace cms.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("api.Entities.ProductOrders", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<float>("GrossPrice")
-                        .HasColumnType("REAL");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("VAT")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ProductId", "OrderId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("ProductOrders");
-                });
-
             modelBuilder.Entity("api.Entities.ProductType", b =>
                 {
                     b.Property<int>("Id")
@@ -337,36 +234,6 @@ namespace cms.Data.Migrations
                     b.Navigation("ShipAddress");
                 });
 
-            modelBuilder.Entity("api.Entities.Delivery", b =>
-                {
-                    b.HasOne("api.Entities.DeliveryType", "DeliveryType")
-                        .WithMany()
-                        .HasForeignKey("DeliveryTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DeliveryType");
-                });
-
-            modelBuilder.Entity("api.Entities.Order", b =>
-                {
-                    b.HasOne("api.Entities.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.Entities.Delivery", "Delivery")
-                        .WithMany()
-                        .HasForeignKey("DeliveryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Delivery");
-                });
-
             modelBuilder.Entity("api.Entities.Product", b =>
                 {
                     b.HasOne("api.Entities.Category", "Category")
@@ -392,25 +259,6 @@ namespace cms.Data.Migrations
                     b.Navigation("Producer");
 
                     b.Navigation("Type");
-                });
-
-            modelBuilder.Entity("api.Entities.ProductOrders", b =>
-                {
-                    b.HasOne("api.Entities.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }
