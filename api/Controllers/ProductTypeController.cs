@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using api.CommandsAndQueries.ProductType;
 using api.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
+    [Authorize]
     public class ProductTypeController : BaseApiController
     {
       [HttpPost]

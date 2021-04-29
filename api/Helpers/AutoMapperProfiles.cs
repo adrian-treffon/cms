@@ -8,7 +8,7 @@ namespace api.Helpers
     {
         public AutoMapperProfiles()
         {
-          
+           CreateMap<Order, OrderDto>();
         }
     }
 }

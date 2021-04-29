@@ -1,5 +1,3 @@
-import { SelectionModel } from '@angular/cdk/collections';
-import { Route } from '@angular/compiler/src/core';
 import {  Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSelectChange } from '@angular/material/select';

@@ -3,7 +3,7 @@
     <mat-nav-list>
       <mat-accordion>
         <a mat-list-item [routerLink]="'/'"><mat-icon mat-list-icon>home</mat-icon><span mat-line>Dashboard</span></a>
-        <a mat-list-item><mat-icon mat-list-icon>list</mat-icon><span mat-line>Zamówienia</span></a>
+        <a mat-list-item [routerLink]="'orders'"><mat-icon mat-list-icon>list</mat-icon><span mat-line>Zamówienia</span></a>
         <a mat-list-item><mat-icon mat-list-icon>local_shipping</mat-icon><span mat-line>Przesyłki</span></a>
         <mat-expansion-panel hideToggle style="box-shadow: none;">
           <mat-expansion-panel-header style="padding: 0;">

@@ -2,11 +2,13 @@ using System.Threading.Tasks;
 using api.CommandsAndQueries.Product;
 using api.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static api.CommandsAndQueries.Product.List;
 
 namespace api.Controllers
 {
+    [Authorize]
     public class ProductController : BaseApiController
     {
       [HttpPost]
