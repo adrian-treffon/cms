@@ -5,3 +5,11 @@ export enum OrderStatus {
   Canceled,
   NoDeposit,
 }
+
+export enum OrderStatusPL {
+  Nowe,
+  Realizowane,
+  Wysłane,
+  Anulowane,
+  Niezapłacone,
+}

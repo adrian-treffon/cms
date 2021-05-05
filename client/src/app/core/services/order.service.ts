@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -12,7 +12,8 @@ export class OrderService {
 
   constructor(private readonly http: HttpClient) { }
 
-  getAll(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.baseUrl + 'order');
+  getAll(status: string): Observable<Order[]> {
+    const params = new HttpParams().append('status', status);
+    return this.http.get<Order[]>(this.baseUrl + 'order', { params });
   }
 }

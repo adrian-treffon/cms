@@ -66,7 +66,7 @@ namespace api.CommandsAndQueries.Product
 
             if(!string.IsNullOrEmpty(request.FilterBy) && !string.IsNullOrEmpty(request.SearchedPhrase))
             {
-              queryable = queryable.Where($"{request.FilterBy}.Contains(@0)",request.SearchedPhrase);
+              queryable = queryable.Where($"{request.FilterBy}.ToLower().Contains(@0)",request.SearchedPhrase.ToLower());
             }
 
             var products = await queryable

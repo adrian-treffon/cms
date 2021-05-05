@@ -1,4 +1,6 @@
 import { Customer } from "./customer";
+import { Delivery } from "./delivery";
+import { OrderProduct } from "./orderProduct";
 import { OrderStatus } from "./orderStatus";
 
 export interface Order {
@@ -7,4 +9,6 @@ export interface Order {
   customer: Customer;
   shippingAddressSameAsCustomer: boolean;
   status: OrderStatus;
+  products : OrderProduct[];
+  delivery : Delivery;
 }

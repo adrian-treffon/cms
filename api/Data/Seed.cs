@@ -210,7 +210,7 @@ namespace api.Data
               new ProductOrders() {
                  OrderId = 1,
                  ProductId = 1,
-                 GrossPrice = 3149*2,
+                 GrossPrice = 3149,
                  VAT = 23,
                  Quantity = 2,
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using api.Entities;
 
 namespace api.DTOs
@@ -10,5 +11,7 @@ namespace api.DTOs
       public Customer Customer {get; set;}
       public bool ShippingAddressSameAsCustomer {get; set;}
       public OrderStatus Status {get; set;}
+      public DeliveryDto Delivery {get; set;}
+      public List<ProductDto> Products {get; set;} = new List<ProductDto>();
     }
 }

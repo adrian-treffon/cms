@@ -11,7 +11,7 @@ namespace api.Controllers
     public class OrderController : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<List<OrderDto>>> List()
-        => await Mediator.Send(new List.Query());
+        public async Task<ActionResult<List<OrderDto>>> List([FromQuery] int status)
+        => await Mediator.Send(new List.Query() {Status = status});
     }
 }
