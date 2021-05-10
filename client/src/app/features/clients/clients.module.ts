@@ -1,23 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { ClientsListComponent } from './clients-list/clients-list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 const routes: Routes = [{
   path: '',
-  component: DashboardComponent
+  component: ClientsListComponent
 }];
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [ClientsListComponent],
   imports: [
-    RouterModule.forChild(routes),
     CommonModule,
     SharedModule,
-    NgxChartsModule
+    RouterModule.forChild(routes),
   ],
   exports: [RouterModule]
 })
-export class DashboardModule { }
+export class ClientsModule { }

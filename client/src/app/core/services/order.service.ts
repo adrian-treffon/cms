@@ -16,4 +16,15 @@ export class OrderService {
     const params = new HttpParams().append('status', status);
     return this.http.get<Order[]>(this.baseUrl + 'order', { params });
   }
+
+  getById(orderId: string): Observable<Order> {
+    return this.http.get<Order>(this.baseUrl + 'order/' + orderId);
+   }
+
+   changeStatus(status: number, id : number): Observable<void> {
+    let params = new HttpParams();
+    params = params.append('status', status.toString()); 
+    params = params.append('id', id.toString()); 
+    return this.http.put<void>(this.baseUrl + 'order', null, { params });
+   }
 }

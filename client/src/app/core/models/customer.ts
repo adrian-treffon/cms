@@ -1,10 +1,10 @@
 import { Address } from "./address";
 
 export interface Customer {
-   Id: number;
-   Address: Address;
-   Phone: string;
-   Mail: string;
-   NIP: string;
-   ShipAddress: Address;
+   id: number;
+   address: Address;
+   phone: string;
+   mail: string;
+   nip: string;
+   shipAddress: Address;
 }

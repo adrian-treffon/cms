@@ -6,3 +6,37 @@ mat-card{
   height: 90%;
   padding: 10px;
 }
+
+table {
+  width: 100%;
+}
+
+.table-container{
+  padding: 0 30px;
+  padding-bottom: 100px;
+}
+
+.form{
+
+  .form-element{
+    width: 280px;
+    padding: 15px;
+    display: inline-block;
+  }
+
+  .medium-element{
+    width: 200px;
+  }
+
+  .sumbit {
+    margin: 0 50px;
+  }
+
+  .submit-button{
+    width: 20%;
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+    margin-right: 0;
+  }
+}

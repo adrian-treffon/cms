@@ -1,24 +1,143 @@
 <div class="orders-details-container">
+<form class="form" *ngIf="loaded">
 <mat-grid-list cols="3" rowHeight='30vh'>
   
   <mat-grid-tile colspan="2">
-    <mat-card><h2>Zamówienie nr</h2></mat-card>
+    <mat-card><h2>Zamówienie nr {{order.id}}</h2>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Data złożenia zamówienia" [value]="getDate(order.createdAt)" readonly type="text">
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Numer telefonu" [value]="order.customer.phone" readonly type="text">
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Adres email" [value]="order.customer.mail" readonly type="text">
+      </mat-form-field>
+
+      <div class="sumbit">
+        <button *ngIf="order.status == 0" mat-stroked-button color="primary" class="submit-button" (click)="changeStatus(1)">Towar skompletowany</button>
+        <button *ngIf="order.status == 0" mat-stroked-button color="primary" class="submit-button" (click)="changeStatus(3)">Anuluj zamówienie</button>
+        <button *ngIf="order.status == 1" mat-stroked-button color="primary" class="submit-button" (click)="changeStatus(2)">Nadaj paczkę</button>
+      </div>
+    </mat-card>
   </mat-grid-tile>
 
   <mat-grid-tile>
-    <mat-card><h2>Dostawa</h2></mat-card>
+    <mat-card><h2>Dostawa</h2>
+      <div *ngIf="order.shippingAddressSameAsCustomer">
+        <mat-form-field class="form-element medium-element">
+          <input matInput placeholder="Imię i nazwisko / Nazwa firmy" [value]="order.customer.address.name" readonly type="text">
+        </mat-form-field>
+        <mat-form-field class="form-element medium-element">
+          <input matInput placeholder="Miasto" [value]="order.customer.address.city" readonly type="text">
+        </mat-form-field>
+        <mat-form-field class="form-element medium-element">
+          <input matInput placeholder="Kod pocztowy" [value]="order.customer.address.postalCode" readonly type="text">
+        </mat-form-field>
+        <mat-form-field class="form-element medium-element">
+          <input matInput placeholder="Ulica" [value]="order.customer.address.street" readonly type="text">
+        </mat-form-field>
+    </div>
+    <div *ngIf="!order.shippingAddressSameAsCustomer">
+      <mat-form-field class="form-element  medium-element">
+        <input matInput placeholder="Imię i nazwisko / Nazwa firmy" [value]="order.customer.shipAddress.name" readonly type="text">
+      </mat-form-field>
+      <mat-form-field class="form-element  medium-element">
+        <input matInput placeholder="Miasto" [value]="order.customer.shipAddress.city" readonly type="text">
+      </mat-form-field>
+      <mat-form-field class="form-element  medium-element">
+        <input matInput placeholder="Kod pocztowy" [value]="order.customer.shipAddress.postalCode" readonly type="text">
+      </mat-form-field>
+      <mat-form-field class="form-element  medium-element">
+        <input matInput placeholder="Ulica" [value]="order.customer.shipAddress.street" readonly type="text">
+      </mat-form-field>
+  </div>
+    </mat-card>
   </mat-grid-tile>
 
   <mat-grid-tile colspan="2">
-    <mat-card><h2>Dane do faktury</h2></mat-card>
+    <mat-card><h2>Dane do faktury</h2>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Imię i nazwisko / Nazwa firmy" [value]="order.customer.address.name" readonly type="text">
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Miasto" [value]="order.customer.address.city" readonly type="text">
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Kod pocztowy" [value]="order.customer.address.postalCode" readonly type="text">
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Ulica" [value]="order.customer.address.street" readonly type="text">
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="NIP" [value]="order.customer.nip" readonly type="text">
+      </mat-form-field>
+    </mat-card>
   </mat-grid-tile>
 
   <mat-grid-tile>
-    <mat-card></mat-card>
+    <mat-card>
+      <mat-form-field class="form-element medium-element" *ngIf="order.status == 2">
+        <input matInput placeholder="Wysłano" [value]="getDate(order.delivery.createdAt)" readonly type="text">
+      </mat-form-field>
+      <mat-form-field class="form-element medium-element" *ngIf="order.status == 2">
+        <input matInput placeholder="Numer listu przeowzowego" [value]="order.delivery.consignmentNoteNumber" readonly type="text">
+      </mat-form-field>
+      <mat-form-field class="form-element medium-element">
+        <input matInput placeholder="Przewoźnik" [value]="order.delivery.deliveryType" readonly type="text">
+      </mat-form-field>
+      <mat-form-field class="form-element medium-element">
+        <input matInput placeholder="Ubezpieczona" [value]="order.delivery.insured  ? 'Tak' : 'Nie'" readonly >
+      </mat-form-field>
+      <mat-form-field class="form-element medium-element" *ngIf="order.delivery.insured">
+        <input matInput placeholder="Kwota ubezpieczenia" [value]="order.delivery.insuranceAmount" readonly type="text">
+      </mat-form-field>
+      <mat-form-field class="form-element medium-element">
+        <input matInput placeholder="Cena wysyłki [zł]" [value]="order.delivery.price" readonly type="text">
+      </mat-form-field>
+      <mat-form-field class="form-element medium-element">
+        <input matInput placeholder="Za pobraniem" [value]="order.delivery.cod ? 'Tak' : 'Nie'" readonly type="text">
+      </mat-form-field>
+    </mat-card>
   </mat-grid-tile>
 
   <mat-grid-tile colspan="3">
-    <mat-card><h2>Towary</h2></mat-card>
+    <mat-card><h2>Towary</h2>
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef > Nazwa </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="sku">
+          <th mat-header-cell *matHeaderCellDef > SKU </th>
+          <td mat-cell *matCellDef="let element"> {{element.sku}} </td>
+        </ng-container>
+        <ng-container matColumnDef="ean">
+          <th mat-header-cell *matHeaderCellDef> EAN </th>
+          <td mat-cell *matCellDef="let element"> {{element.ean}} </td>
+        </ng-container>
+        <ng-container matColumnDef="grossPrice">
+          <th mat-header-cell *matHeaderCellDef > Cena brutto [zł]</th>
+          <td mat-cell *matCellDef="let element"> {{element.grossPrice}} </td>
+        </ng-container>
+        <ng-container matColumnDef="vat">
+          <th mat-header-cell *matHeaderCellDef> VAT [%]</th>
+          <td mat-cell *matCellDef="let element"> {{element.vat != -1 ? element.vat : "NP"}} </td>
+        </ng-container>
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef > Ilość </th>
+          <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </mat-card>
   </mat-grid-tile>
 </mat-grid-list>
+</form>
 </div>
+

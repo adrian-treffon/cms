@@ -1,15 +1,87 @@
 <div  style="padding: 10px 0;">
 <mat-grid-list cols="2" rowHeight='45vh'>
   <mat-grid-tile>
-    <mat-card><h2>Liczba zamówień</h2></mat-card>
+    <mat-card >
+      <h2>Liczba zamówień</h2>
+      <div>
+      <ngx-charts-area-chart-stacked 
+          [view]="[700,300]"
+          [tooltipDisabled]=true
+          [results]="saleData"
+          [yAxisLabel]="'Liczba zamówień [szt.]'"
+          [legend]=false
+          [showXAxisLabel]=false
+          [showYAxisLabel]=true
+          [xAxis]="true"
+          [yAxis]="true"
+          [gradient]="false"
+          [scheme]="colorScheme">
+      </ngx-charts-area-chart-stacked>
+    </div>
+    </mat-card>
   </mat-grid-tile>
 
   <mat-grid-tile>
-    <mat-card><h2>Wartość zamówień</h2></mat-card>
+    <mat-card><h2>Wartość zamówień</h2>
+      <ngx-charts-area-chart-stacked 
+      [view]="[700,300]"
+      [tooltipDisabled]=true
+      [results]="saleAmount"
+      [yAxisLabel]="'Wartość zamówień [zł]'"
+      [legend]=false
+      [showXAxisLabel]=false
+      [showYAxisLabel]=true
+      [xAxis]="true"
+      [yAxis]="true"
+      [gradient]="false"
+      [scheme]="colorScheme">
+  </ngx-charts-area-chart-stacked>
+    </mat-card>
+   
+     
+    
   </mat-grid-tile>
 
   <mat-grid-tile colspan="2">
-    <mat-card><h2>Nowe zamówienia</h2></mat-card>
+    <mat-card><h2>Nowe zamówienia</h2>
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef > Numer </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef > Dodana </th>
+            <td mat-cell *matCellDef="let element"> {{element.createdAt | date:"dd/MM/yyyy HH:mm"}} </td>
+          </ng-container>
+          <ng-container matColumnDef="customer">
+            <th mat-header-cell *matHeaderCellDef > Klient </th>
+            <td mat-cell *matCellDef="let element"> {{element.customer.address.name}} </td>
+          </ng-container>
+          <ng-container matColumnDef="ilość towarów">
+            <th mat-header-cell *matHeaderCellDef > Ilość towarów </th>
+            <td mat-cell *matCellDef="let element"> {{getQuantity(element.products)}} </td>
+          </ng-container>
+          <ng-container matColumnDef="kwota">
+            <th mat-header-cell *matHeaderCellDef > Kwota [zł] </th>
+            <td mat-cell *matCellDef="let element"> {{getPrice(element.products)}} </td>
+          </ng-container>
+          <ng-container matColumnDef="przewoźnik">
+            <th mat-header-cell *matHeaderCellDef > Przewoźnik </th>
+            <td mat-cell *matCellDef="let element"> {{element.delivery.deliveryType}} </td>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element"> <button mat-stroked-button (click)="onEditBtnClick(element)"> Szczegóły </button> </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="14">Brak nowych zamówień</td>
+          </tr>
+        </table>
+      </div>
+    </mat-card>
   </mat-grid-tile>
 
 </mat-grid-list>

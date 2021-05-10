@@ -4,42 +4,40 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Order } from 'src/app/core/models/order';
 import { OrderProduct } from 'src/app/core/models/orderProduct';
-import {  OrderStatusPL } from 'src/app/core/models/orderStatus';
 import { OrderService } from 'src/app/core/services/order.service';
 
 @Component({
-  selector: 'app-orders-list',
-  templateUrl: './orders-list.component.html',
-  styleUrls: ['./orders-list.component.scss']
+  selector: 'app-deliveries-list',
+  templateUrl: './deliveries-list.component.html',
+  styleUrls: ['./deliveries-list.component.scss']
 })
-export class OrdersListComponent implements OnInit {
+export class DeliveriesListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource!: MatTableDataSource<Order>;
   displayedColumns: string[] = [
-    'id',
     'createdAt',
     'customer',
-    'status',
     'ilość towarów',
     'kwota',
     'przewoźnik',
+    'koszt wysyłki',
+    'numer listu',
+    'ubezpieczono',
     'actions'
   ];
-  view = '0';
   totalItems!: number;
   page = 0;
-
   constructor(private readonly orderService: OrderService,
               private readonly router: Router) { }
 
   ngOnInit(): void {
-   this.changeView();
+    this.orderService.getAll('2').subscribe((orders) => {
+      this.dataSource = new MatTableDataSource(orders);
+      this.dataSource.paginator = this.paginator;
+      this.totalItems = orders.length;
+    });
   }
-
-  getStatus(statusType: number): string {
-    return OrderStatusPL[statusType];
-  }
-
+  
   getQuantity(products : OrderProduct[]): number
   {
     let sum = 0 ;
@@ -52,14 +50,6 @@ export class OrdersListComponent implements OnInit {
     let sum = 0 ;
     products.forEach(x => sum += x.grossPrice * x.quantity);
     return sum;
-  }
-
-  changeView(): void {
-    this.orderService.getAll(this.view).subscribe((orders) => {
-      this.dataSource = new MatTableDataSource(orders);
-      this.dataSource.paginator = this.paginator;
-      this.totalItems = orders.length;
-    });
   }
 
   onEditBtnClick(order: Order): void {

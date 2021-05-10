@@ -4,7 +4,7 @@ export interface Delivery {
     insured: boolean;
     createdAt: Date;
     insuranceAmount: number;
-    COD: boolean;
+    cod: boolean;
     consignmentNoteNumber: string;
     price: number;
 }

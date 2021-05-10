@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~11.2.7",
     "@angular/platform-browser-dynamic": "~11.2.7",
     "@angular/router": "~11.2.7",
+    "@swimlane/ngx-charts": "^17.0.1",
     "ngx-spinner": "^11.0.1",
     "ngx-toastr": "^13.2.1",
     "rxjs": "^6.6.7",

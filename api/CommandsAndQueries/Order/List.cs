@@ -38,6 +38,7 @@ namespace api.CommandsAndQueries.Order
             .ThenInclude(x=> x.ShipAddress)
             .Include(x => x.Delivery)
             .ThenInclude(x => x.DeliveryType)
+            .OrderByDescending(x => x.CreatedAt)
             .ToListAsync());
 
             foreach (var order in orders)

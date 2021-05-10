@@ -4,7 +4,7 @@
       <mat-accordion>
         <a mat-list-item [routerLink]="'/'"><mat-icon mat-list-icon>home</mat-icon><span mat-line>Dashboard</span></a>
         <a mat-list-item [routerLink]="'orders'"><mat-icon mat-list-icon>list</mat-icon><span mat-line>Zamówienia</span></a>
-        <a mat-list-item><mat-icon mat-list-icon>local_shipping</mat-icon><span mat-line>Przesyłki</span></a>
+        <a mat-list-item [routerLink]="'deliveries'"><mat-icon mat-list-icon>local_shipping</mat-icon><span mat-line>Przesyłki</span></a>
         <mat-expansion-panel hideToggle style="box-shadow: none;">
           <mat-expansion-panel-header style="padding: 0;">
             <mat-panel-title>
@@ -15,7 +15,7 @@
           <a mat-list-item [routerLink]="'store/add'">Dodaj produkt</a>
         </mat-expansion-panel>
         <a mat-list-item><mat-icon mat-list-icon>data_usage</mat-icon><span mat-line>Raporty</span></a>
-        <a mat-list-item><mat-icon mat-list-icon>account_box</mat-icon><span mat-line>Klienci</span></a>
+        <a mat-list-item [routerLink]="'clients'"><mat-icon mat-list-icon>account_box</mat-icon><span mat-line>Klienci</span></a>
         <a mat-list-item><mat-icon mat-list-icon>screen_share</mat-icon><span mat-line>Marketing</span></a>
         <a mat-list-item><mat-icon mat-list-icon>miscellaneous_services</mat-icon><span mat-line>Ustawienia serwisu</span></a>
         <a mat-list-item [routerLink]="'settings'"><mat-icon mat-list-icon>shopping_cart</mat-icon><span mat-line>Ustawienia sklepu</span></a>

@@ -1,0 +1,42 @@
+<div class="store-list-container">
+<div class="table-container">
+    <mat-paginator [pageSizeOptions]="[10, 15, 20]" 
+    [length]="totalItems" 
+    [pageIndex]="page">
+  </mat-paginator>
+  <table mat-table [dataSource]="dataSource">
+   
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef > Imię i nazwisko/ Nazwa firmy </th>
+      <td mat-cell *matCellDef="let element"> {{element.address.name }}</td>
+    </ng-container> 
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef > Numer telefonu </th>
+      <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+    </ng-container> 
+    <ng-container matColumnDef="mail">
+      <th mat-header-cell *matHeaderCellDef > Adres email </th>
+      <td mat-cell *matCellDef="let element"> {{ element.mail }}</td>
+    </ng-container> 
+    <ng-container matColumnDef="nip">
+      <th mat-header-cell *matHeaderCellDef > NIP </th>
+      <td mat-cell *matCellDef="let element"> {{ element.nip }}</td>
+    </ng-container> 
+    <ng-container matColumnDef="deliveryAddress">
+      <th mat-header-cell *matHeaderCellDef > Adres dostawy </th>
+      <td mat-cell *matCellDef="let element"> {{ getDeliveryAddress(element) }}</td>
+    </ng-container> 
+
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef > Adres </th>
+      <td mat-cell *matCellDef="let element"> {{ getAddress(element) }}</td>
+    </ng-container> 
+    
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="14">No data matching the filter</td>
+    </tr>
+  </table>
+</div>
+</div>
